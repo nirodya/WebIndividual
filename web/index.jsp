@@ -19,39 +19,53 @@
             <input type="number" name="id" /><input type="text" name="name" value="" />
             <input type="submit" value="Save" />
         </form>
-        <%
-            if (request.getSession().getAttribute("users") != null) {
-                ArrayList<Users> ar = (ArrayList<Users>) request.getSession().getAttribute("users");
-                for (Users user : ar) {
-                    if (user.isIsLeft()) {
-
-        %>
         <table style="float: left">
+            <%
+                if (request.getSession().getAttribute("users") != null) {
+                    ArrayList<Users> ar = (ArrayList<Users>) request.getSession().getAttribute("users");
+                    for (Users user : ar) {
+                        if (user.isIsLeft()) {
+
+            %>
             <tr>
                 <td><%= user.getId()%></td>
                 <td><%= user.getName()%></td>
                 <td><form action="ChangeDirection" method="post">
                         <input type="hidden" name="id" value="<%= user.getId()%>" />
+                        <input type="hidden" name="position" value="1" />
                         <input type="submit" value=">>" />
                     </form></td>
             </tr>
+            <%
+                        }
+                    }
+                }
+            %>
         </table>
-        <%        } else {
-        %>
+
         <table style="float: right">
+            <%
+                if (request.getSession().getAttribute("users") != null) {
+                    ArrayList<Users> ar = (ArrayList<Users>) request.getSession().getAttribute("users");
+                    for (Users user : ar) {
+                        if (!user.isIsLeft()) {
+
+            %>
             <tr>
                 <td><%= user.getId()%></td>
                 <td><%= user.getName()%></td>
                 <td><form action="ChangeDirection" method="post">
                         <input type="hidden" name="id" value="<%= user.getId()%>" />
+                        <input type="hidden" name="position" value="0" />
                         <input type="submit" value="<<" />
                     </form></td>
             </tr>
-        </table>
-        <%
+
+            <%
+                        }
                     }
                 }
-            }
-        %>
+            %>
     </body>
+</table>
 </html>

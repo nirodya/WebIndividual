@@ -7,11 +7,13 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Users;
 
 /**
  *
@@ -34,15 +36,16 @@ public class ChangeDirection extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ChangeDirection</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ChangeDirection at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            int id=Integer.parseInt(request.getParameter("id"));
+            int position=Integer.parseInt(request.getParameter("position"));
+            ArrayList<Users> ar = (ArrayList<Users>) request.getSession().getAttribute("users");
+            ar.forEach(user->{
+            if(user.getId()==id&&position==1)
+                user.setIsLeft(false);
+            else if(user.getId()==id&&position==0)
+                user.setIsLeft(true);
+            });
+            response.sendRedirect("index.jsp");
         }
     }
 

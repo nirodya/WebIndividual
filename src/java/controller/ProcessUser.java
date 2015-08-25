@@ -39,7 +39,13 @@ public class ProcessUser extends HttpServlet {
             int id=Integer.parseInt(request.getParameter("id"));
             String name=request.getParameter("name");
             Users u=new Users(id, name, true);
-            ArrayList<Users> users=new ArrayList<>();
+            ArrayList<Users> users=null;
+            if (request.getSession().getAttribute("users") == null){
+            users=new ArrayList<>();
+            }else{
+                users=(ArrayList<Users>) request.getSession().getAttribute("users");
+            }
+            
             users.add(u);
             request.getSession().setAttribute("users", users);
             response.sendRedirect("index.jsp");
